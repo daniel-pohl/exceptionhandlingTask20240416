@@ -1,9 +1,7 @@
 package org.example.springexceptionhandlingtask20240516;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
 
@@ -22,5 +20,12 @@ public class AnimalController {
     @GetMapping
     String getAllAnimals() {
         throw new NoSuchElementException("No Animals found");
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorMessage illegalArgumentException(IllegalArgumentException ex) {
+        //ex.printStackTrace();
+        return new ErrorMessage(ex.getMessage());
     }
 }
